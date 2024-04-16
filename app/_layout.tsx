@@ -57,7 +57,6 @@ function RootLayoutContent() {
 		if (!isLoaded) return
 
 		const inTabsGroup = segments[0] === '(auth)'
-
 		if (isSignedIn && !inTabsGroup) {
 			router.replace('/(tabs)/chats')
 		} else if (!isSignedIn) {
