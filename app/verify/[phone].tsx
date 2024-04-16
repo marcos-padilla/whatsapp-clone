@@ -1,12 +1,11 @@
-import Colors from '@/constants/Colors'
 import {
-	useSignUp,
 	isClerkAPIResponseError,
 	useSignIn,
+	useSignUp,
 } from '@clerk/clerk-expo'
-import { Stack, useLocalSearchParams } from 'expo-router'
+import { Stack, router, useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import {
 	CodeField,
 	Cursor,
@@ -51,10 +50,12 @@ export default function VerifyPhoneScreen() {
 			})
 
 			await setActive!({ session: signUp!.createdSessionId })
+			router.dismissAll()
+			router.replace('/(tabs)/chats')
 		} catch (err) {
 			console.log('error', JSON.stringify(err, null, 2))
 			if (isClerkAPIResponseError(err)) {
-				Alert.alert('Error', err.errors[0].message)
+				Alert.alert('Error', err.errors[0].longMessage)
 			}
 		}
 	}
@@ -67,10 +68,12 @@ export default function VerifyPhoneScreen() {
 			})
 
 			await setActive!({ session: signIn!.createdSessionId })
+			router.dismissAll()
+			router.replace('/(tabs)/chats')
 		} catch (err) {
 			console.log('error', JSON.stringify(err, null, 2))
 			if (isClerkAPIResponseError(err)) {
-				Alert.alert('Error', err.errors[0].message)
+				Alert.alert('Error', err.errors[0].longMessage)
 			}
 		}
 	}
